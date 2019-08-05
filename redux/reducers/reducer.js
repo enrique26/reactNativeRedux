@@ -1,13 +1,12 @@
 import {combineReducers} from 'redux';
 ///acciones
-import { ADD_TODO, REMOVE_TODO, SET_VISIBILITY_FILTER, VisibilityFilters } from '../actions/actions';
+import { ADD_TODO, COMPLETE_TODO, REMOVE_TODO, SET_VISIBILITY_FILTER, VisibilityFilters } from '../actions/actions';
 
 // initial state
 
 const initialState = {
-  visibilityFilter = VisibilityFilters.SHOW_ALL,
+  visibilityFilter : VisibilityFilters.SHOW_ALL,
   todos:[]
-
 }
 
 // crear reducers
@@ -18,7 +17,8 @@ function todos(state = [] ,action ){
       return [
         ...state,
         {
-          text:action.text,completed:false
+          text:action.text,
+          completed:false
         }
       ]
     case COMPLETE_TODO:
@@ -31,8 +31,8 @@ function todos(state = [] ,action ){
             return { todo, completed:true}
           }
           /// caso contrario no modifica el objeto
-          return todo;
-        } );
+          return todo
+        } )
       }
     ]
     case REMOVE_TODO:
@@ -43,7 +43,7 @@ function todos(state = [] ,action ){
   }
 }
 
-function visibilityFilter( state = SHOW_ALL, action){
+function visibilityFilter( state = VisibilityFilters.SHOW_ALL, action){
   switch (action.type) {
     case SET_VISIBILITY_FILTER:
       return action.filter
@@ -59,31 +59,31 @@ function visibilityFilter( state = SHOW_ALL, action){
 ////combinar combineReducers
 
 ///comvecional
-// function todoApp(state = initialState, action){
-//
-//   switch (action.type) {
-//     case SET_VISIBILITY_FILTER:
-//       return { ...state,visibilityFilter:visibilityFilter(state.visibilityFilter,action)}
-//     case ADD_TODO:
-//     case REMOVE_TODO:
-//     case COMPLETE_TODO:
-//     return {
-//       ...state,
-//       {
-//         todos:todos(state.todos,action)
-//       }
-//      }
-//     default:
-//       return state
-//
-//   }
-//
-//   return state
-// }
+const todoApp = (state = initialState, action) => {
+
+  switch (action.type) {
+    case SET_VISIBILITY_FILTER:
+      return {
+        ...state,
+        visibilityFilter:visibilityFilter(state.visibilityFilter,action)
+      }
+    case ADD_TODO:
+    case REMOVE_TODO:
+    case COMPLETE_TODO:
+    return {
+      ...state,
+      todos:todos(state.todos,action)
+
+     }
+    default:
+      return state;
+
+  }
+}
 ///usando combine combineReducers
-const todoApp = combineReducers({
-  visibilityFilter:visibilityFilter,
-  todos:todos
-});
+// const todoApp = combineReducers({
+//   visibilityFilter:visibilityFilter,
+//   todos:todos
+// });
 
 export default todoApp;

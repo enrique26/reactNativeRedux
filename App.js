@@ -8,7 +8,10 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
-import store
+
+import ListTodos from './src/ListTodos';
+import {Provider,connect} from 'react-redux';
+import store from './redux/store/store';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -18,15 +21,20 @@ const instructions = Platform.select({
 });
 
 type Props = {};
-export default class App extends Component<Props> {
+
+class MainApp extends React.Component {
   render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Test reducers</Text>
-        <Text style={styles.instructions}>Catch reducers</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
-    );
+    return (<ListTodos></ListTodos>)
+  }
+}
+
+export default class App extends React.Component {
+  render(){
+    return(
+      <Provider store={store}>
+        <MainApp></MainApp>
+      </Provider>
+    )
   }
 }
 

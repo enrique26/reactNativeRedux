@@ -22,12 +22,12 @@ export const removeTodo=(text)=>({
   text
 });
 
-export const completeTodto=(index)=>({
+export const completeTodo=(index)=>({
     type:COMPLETE_TODO,
     index
 });
 
-export const exportVisibilityFilter=(filter)=>({
+export const visibilityFilter=(filter)=>({
   type:SET_VISIBILITY_FILTER,
   filter
 });
