@@ -1,0 +1,3 @@
+rootProject.name = 'dummyRedux'
+
+include ':app'
