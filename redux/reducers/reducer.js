@@ -10,7 +10,7 @@ const initialState = {
 }
 
 // crear reducers
-
+let index=0;
 function todos(state = [] ,action ){
   switch (action.type) {
     case ADD_TODO:
@@ -18,15 +18,19 @@ function todos(state = [] ,action ){
         ...state,
         {
           text:action.text,
-          completed:false
+          completed:false,
+          index:++index
         }
       ]
     case COMPLETE_TODO:
+    console.log("completodo?=====");
+    // const newState =
     return [
       ...state,
       {
         todos:state.map( (todo,index)=>{
-          if(index === action.index ){
+          console.log(todo);
+          if(todo.index === action.index ){
             //si el indice coincide esta accion se revea
             return { todo, completed:true}
           }
@@ -58,7 +62,7 @@ function visibilityFilter( state = VisibilityFilters.SHOW_ALL, action){
 
 ////combinar combineReducers
 
-///comvecional
+///convecional
 const todoApp = (state = initialState, action) => {
 
   switch (action.type) {
@@ -82,8 +86,8 @@ const todoApp = (state = initialState, action) => {
 }
 ///usando combine combineReducers
 // const todoApp = combineReducers({
-//   visibilityFilter:visibilityFilter,
-//   todos:todos
+//   visibilityFilter,
+//   todos
 // });
 
 export default todoApp;

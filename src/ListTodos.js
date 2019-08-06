@@ -6,7 +6,8 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  Button
+  Button,
+  TouchableOpacity
 } from 'react-native';
 import {
   addTodo,
@@ -31,7 +32,7 @@ class ListTodos extends React.Component {
   }
 
   addNew(){
-
+    if(this.state.fieldTodo == "") return;
     this.props.addTodo(this.state.fieldTodo);
     this.setState({
       fieldTodo:""
@@ -39,22 +40,49 @@ class ListTodos extends React.Component {
 
   }
 
+  completeTask(index){
+
+    this.props.completeTodo(index)
+  }
+
+  removeTask(index){
+    console.log("catchme "+index )
+    this.props.removeTodo(index)
+  }
+
   render(){
+    const { todos } = this.props;
+    console.log("render =====")
+    console.log(todos)
     return(
 
       <View style={styles.container}>
-        <Text style={{alignSelf:"center",color:"black",fontSize:18}}>Add todo</Text>
-        <View style={{flexDirection:'row',alignSelf:'stretch',alignItems:'center',justifyContent:'center'}}>
+        <Text style={{alignSelf:"center",color:"black",fontWeight:'bold',fontSize:18}}>Add todo with redux</Text>
+        <View style={{marginTop:20,marginBottom:20,flexDirection:'row',alignSelf:'stretch',alignItems:'center',justifyContent:'center'}}>
           <TextInput
             style={{marginRight:40,alignSelf:'center',width:200,height:40,color:'black',borderColor:"#0022a9",borderWidth:1}}
             value={this.state.fieldTodo}
             onChangeText={value => this.setState({fieldTodo:value})} />
 
-          <Button onPress={ ()=> this.addNew()} title={"add"} style={{height:40,width:40,backgroundColor:'gray',color:'white'}}></Button>
+          <TouchableOpacity onPress={ ()=> this.addNew()} style={{borderRadius:10,height:40,width:40,backgroundColor:'gray',alignItems:'center',justifyContent:'center'}}>
+            <Text style={{color:"white",fontWeight:'bold'}}>ADD</Text>
+          </TouchableOpacity>
         </View>
 
         {
-          this.props.todos.map( (todo,index)=> ( <Text style={{marginLeft:10,alignSelf:'flex-start',marginTop:5,borderBottomColor:'gray',borderBottomWidth:1,color:todo.completed == true ? "#22b900":"red"}} key={`inlK${index}`}>{todo.text}</Text> ) )
+          todos.map( (todo,index)=> (
+            <View style={{marginTop:15,flexDirection:'row',alignSelf:'flex-start'}} key={`inlK${index}`}>
+              <Text style={{marginLeft:10,marginRight:10,alignSelf:'flex-start',borderBottomColor:'gray',borderBottomWidth:1,color:todo.completed == true ? "#22b900":"red"}}>{todo.text}</Text>
+              {
+              todos.completed != true &&  <TouchableOpacity style={{borderRadius:5,backgroundColor:"#22b900",height:30,width:null,fontSize:14,justifyContent:'center',alignItems:'center'}} onPress={()=> this.completeTask(todo.index)} >
+                  <Text style={{padding:5,color:"white",fontWeight:'bold'}}>complete</Text>
+                </TouchableOpacity>
+              }
+              <TouchableOpacity style={{borderRadius:5,marginLeft:5,backgroundColor:"red",height:30,width:null,fontSize:14,justifyContent:'center',alignItems:'center'}} onPress={()=>this.removeTask(todo.index)} >
+                <Text style={{padding:5,color:"white",fontWeight:'bold'}}>remove</Text>
+              </TouchableOpacity>
+            </View>
+           ) )
         }
       </View>
     )
@@ -63,7 +91,10 @@ class ListTodos extends React.Component {
 const mapStateTodos = state => ({
   todos: state.todos,
 })
-export default connect(mapStateTodos,{addTodo})(ListTodos);
+export default connect(mapStateTodos,{
+  addTodo,
+  removeTodo,
+  completeTodo})(ListTodos);
 
 const styles = StyleSheet.create({
   container: {

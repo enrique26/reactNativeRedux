@@ -17,9 +17,9 @@ export const addTodo=(text)=>({
   text
 });
 
-export const removeTodo=(text)=>({
+export const removeTodo=(index)=>({
   type:REMOVE_TODO,
-  text
+  index
 });
 
 export const completeTodo=(index)=>({
