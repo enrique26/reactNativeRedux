@@ -53,7 +53,6 @@ class ListTodos extends React.Component {
   render(){
     const { todos } = this.props;
     console.log("render =====")
-    console.log(todos)
     return(
 
       <View style={styles.container}>
@@ -70,15 +69,15 @@ class ListTodos extends React.Component {
         </View>
 
         {
-          todos.map( (todo,index)=> (
+          todos.map( (item,index)=> (
             <View style={{marginTop:15,flexDirection:'row',alignSelf:'flex-start'}} key={`inlK${index}`}>
-              <Text style={{marginLeft:10,marginRight:10,alignSelf:'flex-start',borderBottomColor:'gray',borderBottomWidth:1,color:todo.completed == true ? "#22b900":"red"}}>{todo.text}</Text>
-              {
-              todos.completed != true &&  <TouchableOpacity style={{borderRadius:5,backgroundColor:"#22b900",height:30,width:null,fontSize:14,justifyContent:'center',alignItems:'center'}} onPress={()=> this.completeTask(todo.index)} >
-                  <Text style={{padding:5,color:"white",fontWeight:'bold'}}>complete</Text>
-                </TouchableOpacity>
-              }
-              <TouchableOpacity style={{borderRadius:5,marginLeft:5,backgroundColor:"red",height:30,width:null,fontSize:14,justifyContent:'center',alignItems:'center'}} onPress={()=>this.removeTask(todo.index)} >
+              <Text style={{marginLeft:10,marginRight:10,alignSelf:'flex-start',borderBottomColor:'gray',borderBottomWidth:1,color:item.completed == true ? "#22b900":"red"}}>{item.text}</Text>
+                 {
+                   item.completed == false && <TouchableOpacity style={{borderRadius:5,backgroundColor:"#22b900",height:30,width:null,fontSize:14,justifyContent:'center',alignItems:'center'}} onPress={()=> this.completeTask(item.index)} >
+                    <Text style={{padding:5,color:"white",fontWeight:'bold'}}>complete</Text>
+                  </TouchableOpacity>
+                }
+              <TouchableOpacity style={{borderRadius:5,marginLeft:5,backgroundColor:"red",height:30,width:null,fontSize:14,justifyContent:'center',alignItems:'center'}} onPress={()=>this.removeTask(item.index)} >
                 <Text style={{padding:5,color:"white",fontWeight:'bold'}}>remove</Text>
               </TouchableOpacity>
             </View>

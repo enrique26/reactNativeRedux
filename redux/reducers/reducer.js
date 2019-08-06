@@ -23,25 +23,18 @@ function todos(state = [] ,action ){
         }
       ]
     case COMPLETE_TODO:
-    console.log("completodo?=====");
-    // const newState =
-    return [
-      ...state,
-      {
-        todos:state.map( (todo,index)=>{
-          console.log(todo);
-          if(todo.index === action.index ){
-            //si el indice coincide esta accion se revea
-            return { todo, completed:true}
-          }
-          /// caso contrario no modifica el objeto
+      const newState = state.map( (todo, index)=>{
+        if(action.index === todo.index){
+          todo.completed = true
           return todo
-        } )
-      }
-    ]
+        }
+        return todo
+      } )
+      return newState
+
     case REMOVE_TODO:
-      const newState = state.filter( (todo) => todo.index !== action.index );
-      return newState;
+      let newStateClean = state.filter( (todo) => todo.index !== action.index );
+      return newStateClean;
     default:
       return todos;
   }
