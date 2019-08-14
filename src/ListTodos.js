@@ -27,8 +27,8 @@ class ListTodos extends React.Component {
   }
 
   componentDidMount() {
-      console.log("list log=====")
-      console.log(this.props.todos);
+      // console.log("list log=====")
+      // console.log(this.props.todos);
   }
 
   addNew(){
@@ -41,22 +41,20 @@ class ListTodos extends React.Component {
   }
 
   completeTask(index){
-
     this.props.completeTodo(index)
   }
 
   removeTask(index){
-    console.log("catchme "+index )
     this.props.removeTodo(index)
   }
 
   render(){
     const { todos } = this.props;
-    console.log("render =====")
+
     return(
 
       <View style={styles.container}>
-        <Text style={{alignSelf:"center",color:"black",fontWeight:'bold',fontSize:18}}>Add todo with redux</Text>
+        <Text style={{padding:10,textAlign:'center',alignSelf:"center",color:"black",fontWeight:'bold',fontSize:18}}>Add todo with redux,{"\n"}(now with redux-persist)</Text>
         <View style={{marginTop:20,marginBottom:20,flexDirection:'row',alignSelf:'stretch',alignItems:'center',justifyContent:'center'}}>
           <TextInput
             style={{marginRight:40,alignSelf:'center',width:200,height:40,color:'black',borderColor:"#0022a9",borderWidth:1}}
