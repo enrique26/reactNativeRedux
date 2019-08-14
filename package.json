@@ -7,10 +7,12 @@
     "test": "jest"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.6.1",
     "react": "16.8.3",
     "react-native": "0.59.9",
     "react-redux": "^7.1.0",
     "redux": "^4.0.4",
+    "redux-logger": "^3.0.6",
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.3.0"
   },
