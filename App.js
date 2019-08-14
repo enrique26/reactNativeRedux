@@ -11,16 +11,10 @@ import {Platform, StyleSheet, Text, View} from 'react-native';
 
 import ListTodos from './src/ListTodos';
 import {Provider,connect} from 'react-redux';
-import store from './redux/store/store';
+import { PersistGate } from 'redux-persist/integration/react'
+// import store from './redux/store/store';
+import {store,persistor} from './redux/store/store';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-
-type Props = {};
 
 class MainApp extends React.Component {
   render() {
@@ -31,9 +25,11 @@ class MainApp extends React.Component {
 export default class App extends React.Component {
   render(){
     return(
-      <Provider store={store}>
-        <MainApp></MainApp>
-      </Provider>
+      <PersistGate loading={<Text>Loading...</Text>} persistor={persistor}>
+        <Provider store={store}>
+          <MainApp></MainApp>
+        </Provider>
+      </PersistGate>
     )
   }
 }
